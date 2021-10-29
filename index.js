@@ -22,6 +22,7 @@ async function run() {
     await client.connect();
     const database = client.db("aventoura");
     const packageCollection = database.collection("tourPlans");
+    const touristCollection = database.collection("tourists");
 
     // get all data API
     app.get("/plans", async (req, res) => {
@@ -41,6 +42,14 @@ async function run() {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await packageCollection.findOne(query);
+      res.send(result);
+    });
+
+    // post single data API
+    app.post("/tourists", async (req, res) => {
+      const doc = req.body;
+      const result = await touristCollection.insertOne(doc);
+      console.log(result);
       res.send(result);
     });
   } finally {
