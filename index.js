@@ -67,6 +67,7 @@ async function run() {
 }
 run().catch(console.dir);
 
+//heroku deployed
 // default API's
 app.get("/", (req, res) => {
   res.send("Aventour Database Running Successfully");
