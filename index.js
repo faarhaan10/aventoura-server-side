@@ -45,6 +45,15 @@ async function run() {
       res.send(result);
     });
 
+    // get tourist data API
+    app.get("/tourists", async (req, res) => {
+      const emailTourist = req.query.email;
+      const query = { email: emailTourist };
+      const cursor = touristCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // post single data API
     app.post("/tourists", async (req, res) => {
       const doc = req.body;
