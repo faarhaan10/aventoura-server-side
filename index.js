@@ -61,13 +61,20 @@ async function run() {
       console.log(result);
       res.send(result);
     });
+
+    // delete single data API
+    app.delete("/tourist/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await touristCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
 }
 run().catch(console.dir);
 
-//heroku deployed
 // default API's
 app.get("/", (req, res) => {
   res.send("Aventour Database Running Successfully");
