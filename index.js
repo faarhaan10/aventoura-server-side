@@ -24,9 +24,9 @@ async function run() {
         const packageCollection = database.collection("tourPlans");
         const touristCollection = database.collection("tourists");
 
-        // get all package data API
+        // get all package plans data API
         app.get("/packages", async(req, res) => {
-            const cursor = packageCollection.find({});
+            const cursor = packageCollection.find({}).sort({ "_id": -1 });
             const size = parseInt(req.query.size);
             let result;
             if (size) {
@@ -37,15 +37,15 @@ async function run() {
             res.send(result);
         });
 
-        // get single package data API
-        app.get("/plans/:id", async(req, res) => {
+        // get single package plan data API
+        app.get("/packages/:id", async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await packageCollection.findOne(query);
             res.send(result);
         });
 
-        // post single package data API
+        // post single package plan data API
         app.post("/packages", async(req, res) => {
             const doc = req.body;
             const result = await packageCollection.insertOne(doc);
