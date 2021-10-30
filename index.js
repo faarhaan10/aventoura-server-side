@@ -48,9 +48,17 @@ async function run() {
     // get tourist data API
     app.get("/tourists", async (req, res) => {
       const emailTourist = req.query.email;
-      const query = { email: emailTourist };
-      const cursor = touristCollection.find(query);
-      const result = await cursor.toArray();
+      
+      let result;
+      if(emailTourist){
+        const query = { email: emailTourist };
+        const cursor = touristCollection.find(query);
+        result = await cursor.toArray();
+      }
+      else{
+        const cursor = touristCollection.find({});
+        result = await cursor.toArray();
+      }
       res.send(result);
     });
 
@@ -59,6 +67,17 @@ async function run() {
       const doc = req.body;
       const result = await touristCollection.insertOne(doc);
       console.log(result);
+      res.send(result);
+    });
+
+    // update single data API
+    app.put("/tourists/:id", async (req, res) => {
+      const id = req.params.id;
+      const doc = req.body;
+      const query = { _id: ObjectId(id) };
+      const updateDoc = {$set: doc};
+      const options = { upsert: true };
+      const result = await touristCollection.updateOne(query, updateDoc, options);
       res.send(result);
     });
 
