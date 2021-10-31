@@ -25,7 +25,7 @@ async function run() {
         const touristCollection = database.collection("tourists");
 
         // get all package plans data API
-        app.get("/packages", async(req, res) => {
+        app.get("/packages", async (req, res) => {
             const cursor = packageCollection.find({}).sort({ "_id": -1 });
             const size = parseInt(req.query.size);
             let result;
@@ -38,7 +38,7 @@ async function run() {
         });
 
         // get single package plan data API
-        app.get("/packages/:id", async(req, res) => {
+        app.get("/packages/:id", async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await packageCollection.findOne(query);
@@ -46,14 +46,14 @@ async function run() {
         });
 
         // post single package plan data API
-        app.post("/packages", async(req, res) => {
+        app.post("/packages", async (req, res) => {
             const doc = req.body;
             const result = await packageCollection.insertOne(doc);
             res.send(result);
         });
 
         // get tourist data API
-        app.get("/tourists", async(req, res) => {
+        app.get("/tourists", async (req, res) => {
             const emailTourist = req.query.email;
 
             let result;
@@ -69,7 +69,7 @@ async function run() {
         });
 
         // post single tourist data API
-        app.post("/tourists", async(req, res) => {
+        app.post("/tourists", async (req, res) => {
             const doc = req.body;
             const result = await touristCollection.insertOne(doc);
             console.log(result);
@@ -77,7 +77,7 @@ async function run() {
         });
 
         // update single tourist data API
-        app.put("/tourists/:id", async(req, res) => {
+        app.put("/tourists/:id", async (req, res) => {
             const id = req.params.id;
             const doc = req.body;
             const query = { _id: ObjectId(id) };
@@ -88,7 +88,7 @@ async function run() {
         });
 
         // delete single tourist data API
-        app.delete("/tourist/:id", async(req, res) => {
+        app.delete("/tourist/:id", async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
             const result = await touristCollection.deleteOne(query);
@@ -108,3 +108,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log("db running on port", port);
 });
+
+// project done :)
